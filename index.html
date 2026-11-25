@@ -1,0 +1,1696 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Game Lawan Kata (Antonyms) - Bahasa Inggris SD</title>
+  <style>
+    /* =====================================================================
+       RESET & TEMA MOBILE-FIRST RAMAH ANAK SD
+       ===================================================================== */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --bg-outer: #e2e8f0;
+      --bg-app: #f8fafc;
+      --surface: #ffffff;
+      --border: #e2e8f0;
+      --border-strong: #cbd5e1;
+      --text-main: #0f172a;
+      --text-muted: #475569;
+      --text-soft: #64748b;
+
+      --primary: #4f46e5;
+      --primary-dark: #4338ca;
+      --primary-light: #e0e7ff;
+      --primary-soft: #eef2ff;
+
+      --sky: #0284c7;
+      --sky-light: #e0f2fe;
+
+      --emerald: #10b981;
+      --emerald-dark: #059669;
+      --emerald-light: #d1fae5;
+
+      --amber: #f59e0b;
+      --amber-dark: #d97706;
+      --amber-light: #fef3c7;
+
+      --red: #ef4444;
+      --red-dark: #dc2626;
+      --red-light: #fee2e2;
+    }
+
+    html, body {
+      width: 100%;
+      height: 100dvh;
+      overflow: hidden;
+      overscroll-behavior: none;
+      background-color: var(--bg-outer);
+      color: var(--text-main);
+      font-family: 'Segoe UI', system-ui, -apple-system, Roboto, 'Helvetica Neue', Arial, sans-serif;
+      -webkit-tap-highlight-color: transparent;
+      user-select: none;
+      -webkit-user-select: none;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    /* Kontainer Utama Terpusat */
+    .app-shell {
+      max-width: 520px;
+      width: 100%;
+      height: 100%;
+      margin: 0 auto;
+      background: var(--bg-app);
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 12px 32px rgba(15, 23, 42, 0.1);
+    }
+
+    /* =====================================================================
+       HEADER MINIMALIS (~52px)
+       ===================================================================== */
+    .app-header {
+      height: 52px;
+      min-height: 52px;
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      padding: 0 12px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      flex-shrink: 0;
+      z-index: 20;
+    }
+
+    .brand-group {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      min-width: 0;
+    }
+
+    .brand-logo {
+      width: 34px;
+      height: 34px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, #4f46e5, #0284c7);
+      color: #ffffff;
+      font-size: 15px;
+      font-weight: 900;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      box-shadow: 0 3px 8px rgba(79, 70, 229, 0.25);
+    }
+
+    .brand-title {
+      font-size: 14.5px;
+      font-weight: 800;
+      color: var(--text-main);
+      line-height: 1.15;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .brand-sub {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--text-soft);
+      line-height: 1.2;
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-shrink: 0;
+    }
+
+    .icon-btn {
+      width: 34px;
+      height: 34px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      background: #f8fafc;
+      color: var(--text-main);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: transform 0.12s ease, background 0.15s ease;
+    }
+
+    .icon-btn:active {
+      transform: scale(0.92);
+    }
+
+    .icon-btn.muted {
+      color: var(--text-soft);
+      background: #f1f5f9;
+    }
+
+    /* =====================================================================
+       AREA PERMAINAN UTAMA (10 SOAL ACAK - SIDE BY SIDE)
+       ===================================================================== */
+    .game-viewport {
+      flex: 1;
+      min-height: 0;
+      padding: 10px 12px 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      overflow: hidden;
+    }
+
+    /* Topbar Progres 10 Langkah + Skor */
+    .status-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      flex-shrink: 0;
+    }
+
+    .progress-track {
+      flex: 1;
+      display: grid;
+      grid-template-columns: repeat(10, 1fr);
+      gap: 4px;
+      align-items: center;
+    }
+
+    .step-pill {
+      height: 8px;
+      border-radius: 999px;
+      background: #e2e8f0;
+      transition: background-color 0.2s ease, transform 0.2s ease;
+    }
+
+    .step-pill.current {
+      background: var(--primary);
+      transform: scaleY(1.25);
+    }
+
+    .step-pill.correct {
+      background: var(--emerald);
+    }
+
+    .step-pill.wrong {
+      background: var(--red);
+    }
+
+    .score-badge {
+      background: var(--amber-light);
+      color: #92400e;
+      border: 1px solid #fde68a;
+      font-size: 12px;
+      font-weight: 800;
+      padding: 4px 10px;
+      border-radius: 999px;
+      flex-shrink: 0;
+    }
+
+    /* =====================================================================
+       MODEL "LENGKAPI KOTAK KOSONG" (ATAS: PASANGAN KARTU, BAWAH: 2 OPSI LEBAR)
+       ===================================================================== */
+    .pair-stage {
+      flex: 1;
+      min-height: 0;
+      background: var(--surface);
+      border: 2px solid var(--border);
+      border-radius: 22px;
+      padding: 12px 12px 10px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      box-shadow: 0 6px 18px rgba(15, 23, 42, 0.04);
+    }
+
+    .q-top-meta {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      flex-shrink: 0;
+    }
+
+    .q-number-pill {
+      font-size: 11.5px;
+      font-weight: 800;
+      color: var(--primary);
+      background: var(--primary-soft);
+      padding: 4px 10px;
+      border-radius: 999px;
+      white-space: nowrap;
+    }
+
+    .speak-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 5px 11px;
+      border-radius: 999px;
+      border: 1.5px solid #bae6fd;
+      background: var(--sky-light);
+      color: #0369a1;
+      font-size: 11.5px;
+      font-weight: 800;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: transform 0.12s ease, background-color 0.15s ease;
+    }
+
+    .speak-btn:active {
+      transform: scale(0.94);
+    }
+
+    /* Baris Pasangan: [Kartu Soal] ⇄ [Kotak Kosong ?] */
+    .pair-slots-row {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      align-items: center;
+      gap: 8px;
+      my: auto;
+      padding: 4px 0;
+    }
+
+    .slot-card {
+      border-radius: 18px;
+      padding: 12px 8px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      min-height: 136px;
+      transition: all 0.22s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .slot-card.known {
+      background: linear-gradient(160deg, #f8fafc, #eef2ff);
+      border: 2px solid #c7d2fe;
+    }
+
+    .slot-card.target-empty {
+      background: #fffbeb;
+      border: 2.5px dashed #f59e0b;
+      animation: pulseSlot 1.8s ease-in-out infinite;
+    }
+
+    @keyframes pulseSlot {
+      0%, 100% { border-color: #f59e0b; background-color: #fffbeb; }
+      50% { border-color: #6366f1; background-color: #eef2ff; }
+    }
+
+    .slot-card.target-filled {
+      background: var(--emerald-light);
+      border: 2.5px solid var(--emerald);
+      animation: slotPopIn 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    @keyframes slotPopIn {
+      0% { transform: scale(0.86); opacity: 0.5; }
+      70% { transform: scale(1.04); opacity: 1; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+
+    .slot-illus {
+      width: 58px;
+      height: 58px;
+      border-radius: 16px;
+      background: #ffffff;
+      border: 1.5px solid #e2e8f0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 7px;
+      box-shadow: 0 3px 8px rgba(15, 23, 42, 0.05);
+    }
+
+    .slot-illus svg {
+      width: 42px;
+      height: 42px;
+    }
+
+    .slot-qmark-box {
+      width: 58px;
+      height: 58px;
+      border-radius: 16px;
+      background: #fef3c7;
+      border: 2px dashed #f59e0b;
+      color: #d97706;
+      font-size: 30px;
+      font-weight: 900;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 7px;
+    }
+
+    .slot-word-en {
+      font-size: clamp(19px, 5.4vw, 24px);
+      font-weight: 900;
+      color: var(--text-main);
+      line-height: 1.15;
+      word-break: break-word;
+    }
+
+    .slot-word-id {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
+    .slot-placeholder-text {
+      font-size: 13px;
+      font-weight: 800;
+      color: #b45309;
+      line-height: 1.25;
+    }
+
+    .pair-connector {
+      width: 34px;
+      height: 34px;
+      border-radius: 999px;
+      background: var(--primary-soft);
+      border: 1.5px solid #c7d2fe;
+      color: var(--primary);
+      font-size: 16px;
+      font-weight: 900;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .q-feedback {
+      width: 100%;
+      min-height: 32px;
+      font-size: 12px;
+      line-height: 1.3;
+      font-weight: 800;
+      padding: 6px 10px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      opacity: 0;
+      transform: translateY(4px);
+      transition: opacity 0.18s ease, transform 0.18s ease;
+      flex-shrink: 0;
+    }
+
+    .q-feedback.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .q-feedback.is-correct {
+      background: var(--emerald-light);
+      color: var(--emerald-dark);
+    }
+
+    .q-feedback.is-wrong {
+      background: var(--red-light);
+      color: var(--red-dark);
+    }
+
+    /* Bagian Bawah: 2 Kartu Pilihan Jawaban Lebar */
+    .options-stack {
+      display: grid;
+      grid-template-columns: 1fr;
+      grid-template-rows: repeat(2, 1fr);
+      gap: 10px;
+      flex-shrink: 0;
+    }
+
+    .option-card {
+      width: 100%;
+      min-height: 78px;
+      border-radius: 20px;
+      border: 2.5px solid var(--border);
+      background: var(--surface);
+      padding: 10px 14px;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      gap: 12px;
+      text-align: left;
+      cursor: pointer;
+      box-shadow: 0 4px 0 var(--border);
+      transition: transform 0.1s ease, background-color 0.15s ease, border-color 0.15s ease;
+    }
+
+    .option-card:active:not(:disabled) {
+      transform: translateY(2px);
+      box-shadow: 0 1px 0 var(--border);
+    }
+
+    .option-card:disabled {
+      cursor: default;
+    }
+
+    .opt-badge {
+      width: 30px;
+      height: 30px;
+      border-radius: 10px;
+      background: #f1f5f9;
+      color: var(--text-soft);
+      font-size: 13px;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .option-card.opt-correct .opt-badge,
+    .option-card.opt-wrong .opt-badge {
+      background: rgba(255, 255, 255, 0.24);
+      color: #ffffff;
+    }
+
+    .opt-illus {
+      width: 54px;
+      height: 54px;
+      border-radius: 15px;
+      background: #f8fafc;
+      border: 1.5px solid #e2e8f0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .opt-illus svg {
+      width: 38px;
+      height: 38px;
+    }
+
+    .opt-text-group {
+      flex: 1;
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .opt-word-en {
+      font-size: clamp(20px, 5.6vw, 25px);
+      font-weight: 900;
+      color: var(--text-main);
+      line-height: 1.15;
+    }
+
+    .opt-word-id {
+      font-size: 12.5px;
+      font-weight: 700;
+      color: var(--text-soft);
+      margin-top: 2px;
+      line-height: 1.2;
+    }
+
+    .opt-word-id.is-hidden-id {
+      display: none;
+    }
+
+    /* Status Benar / Salah pada Kartu Pilihan */
+    .option-card.opt-correct {
+      background: var(--emerald);
+      border-color: var(--emerald-dark);
+      box-shadow: 0 4px 12px rgba(16, 185, 129, 0.35);
+    }
+
+    .option-card.opt-correct .opt-illus {
+      background: rgba(255, 255, 255, 0.94);
+      border-color: transparent;
+    }
+
+    .option-card.opt-correct .opt-word-en,
+    .option-card.opt-correct .opt-word-id {
+      color: #ffffff;
+    }
+
+    @keyframes shakeWrong {
+      0%, 100% { transform: translateX(0); }
+      20% { transform: translateX(-7px); }
+      40% { transform: translateX(7px); }
+      60% { transform: translateX(-5px); }
+      80% { transform: translateX(5px); }
+    }
+
+    .option-card.opt-wrong {
+      background: var(--red);
+      border-color: var(--red-dark);
+      box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+      animation: shakeWrong 0.38s ease-in-out;
+    }
+
+    .option-card.opt-wrong .opt-illus {
+      background: rgba(255, 255, 255, 0.94);
+      border-color: transparent;
+    }
+
+    .option-card.opt-wrong .opt-word-en,
+    .option-card.opt-wrong .opt-word-id {
+      color: #ffffff;
+    }
+
+    .option-card.opt-dim {
+      opacity: 0.48;
+    }
+
+    /* Kolom Kiri: Kartu Soal */
+    .question-card {
+      width: 48%;
+      height: 100%;
+      min-height: 0;
+      background: var(--surface);
+      border: 2px solid var(--border);
+      border-radius: 22px;
+      padding: 12px 10px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+      text-align: center;
+      position: relative;
+      box-shadow: 0 6px 18px rgba(15, 23, 42, 0.04);
+    }
+
+    .q-top-meta {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 4px;
+      flex-shrink: 0;
+    }
+
+    .q-number-pill {
+      font-size: 10.5px;
+      font-weight: 800;
+      color: var(--primary);
+      background: var(--primary-soft);
+      padding: 3px 8px;
+      border-radius: 999px;
+      white-space: nowrap;
+    }
+
+    .speak-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 3px;
+      padding: 3px 8px;
+      border-radius: 999px;
+      border: 1px solid #bae6fd;
+      background: var(--sky-light);
+      color: #0369a1;
+      font-size: 10.5px;
+      font-weight: 800;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: transform 0.12s ease;
+    }
+
+    .speak-btn:active {
+      transform: scale(0.94);
+    }
+
+    .q-center-body {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      my: auto;
+    }
+
+    .q-prompt-label {
+      font-size: 11.5px;
+      font-weight: 700;
+      color: var(--text-soft);
+      margin-bottom: 8px;
+    }
+
+    .q-illustration-box {
+      width: 72px;
+      height: 72px;
+      border-radius: 20px;
+      background: linear-gradient(145deg, #f8fafc, #eef2ff);
+      border: 2px solid #e0e7ff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 10px;
+      box-shadow: 0 4px 10px rgba(79, 70, 229, 0.08);
+    }
+
+    .q-illustration-box svg {
+      width: 50px;
+      height: 50px;
+    }
+
+    .q-word-en {
+      font-size: clamp(21px, 6vw, 29px);
+      font-weight: 900;
+      color: var(--text-main);
+      letter-spacing: 0.2px;
+      line-height: 1.15;
+      word-break: break-word;
+    }
+
+    .q-word-id {
+      font-size: 12.5px;
+      font-weight: 700;
+      color: var(--text-muted);
+      margin-top: 3px;
+    }
+
+    .q-feedback {
+      width: 100%;
+      min-height: 32px;
+      font-size: 11px;
+      line-height: 1.3;
+      font-weight: 800;
+      padding: 5px 8px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transform: translateY(4px);
+      transition: opacity 0.18s ease, transform 0.18s ease;
+      flex-shrink: 0;
+    }
+
+    .q-feedback.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .q-feedback.is-correct {
+      background: var(--emerald-light);
+      color: var(--emerald-dark);
+    }
+
+    .q-feedback.is-wrong {
+      background: var(--red-light);
+      color: var(--red-dark);
+    }
+
+    /* Kolom Kanan: 2 Kartu Pilihan Jawaban Tersusun Vertikal */
+    .options-grid {
+      width: 52%;
+      height: 100%;
+      min-height: 0;
+      display: grid;
+      grid-template-columns: 1fr;
+      grid-template-rows: repeat(2, 1fr);
+      gap: 10px;
+    }
+
+    .option-card {
+      width: 100%;
+      height: 100%;
+      min-height: 0;
+      border-radius: 22px;
+      border: 2.5px solid var(--border);
+      background: var(--surface);
+      padding: 10px 8px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+      position: relative;
+      cursor: pointer;
+      box-shadow: 0 4px 0 var(--border);
+      transition: transform 0.1s ease, background-color 0.15s ease, border-color 0.15s ease;
+    }
+
+    .option-card:active:not(:disabled) {
+      transform: translateY(2px);
+      box-shadow: 0 1px 0 var(--border);
+    }
+
+    .option-card:disabled {
+      cursor: default;
+    }
+
+    .opt-badge {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      width: 24px;
+      height: 24px;
+      border-radius: 8px;
+      background: #f1f5f9;
+      color: var(--text-soft);
+      font-size: 11.5px;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .option-card.opt-correct .opt-badge,
+    .option-card.opt-wrong .opt-badge {
+      background: rgba(255, 255, 255, 0.24);
+      color: #ffffff;
+    }
+
+    .opt-illus {
+      width: 56px;
+      height: 56px;
+      border-radius: 16px;
+      background: #f8fafc;
+      border: 1.5px solid #f1f5f9;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .opt-illus svg {
+      width: 40px;
+      height: 40px;
+    }
+
+    .opt-word-en {
+      font-size: clamp(18px, 5vw, 23px);
+      font-weight: 900;
+      color: var(--text-main);
+      line-height: 1.15;
+      word-break: break-word;
+    }
+
+    .opt-word-id {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--text-soft);
+      line-height: 1.15;
+    }
+
+    /* Status Benar / Salah pada Kartu Pilihan */
+    .option-card.opt-correct {
+      background: var(--emerald);
+      border-color: var(--emerald-dark);
+      box-shadow: 0 4px 12px rgba(16, 185, 129, 0.35);
+    }
+
+    .option-card.opt-correct .opt-illus {
+      background: rgba(255, 255, 255, 0.94);
+      border-color: transparent;
+    }
+
+    .option-card.opt-correct .opt-word-en,
+    .option-card.opt-correct .opt-word-id {
+      color: #ffffff;
+    }
+
+    @keyframes shakeWrong {
+      0%, 100% { transform: translateX(0); }
+      20% { transform: translateX(-7px); }
+      40% { transform: translateX(7px); }
+      60% { transform: translateX(-5px); }
+      80% { transform: translateX(5px); }
+    }
+
+    .option-card.opt-wrong {
+      background: var(--red);
+      border-color: var(--red-dark);
+      box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+      animation: shakeWrong 0.38s ease-in-out;
+    }
+
+    .option-card.opt-wrong .opt-illus {
+      background: rgba(255, 255, 255, 0.94);
+      border-color: transparent;
+    }
+
+    .option-card.opt-wrong .opt-word-en,
+    .option-card.opt-wrong .opt-word-id {
+      color: #ffffff;
+    }
+
+    .option-card.opt-dim {
+      opacity: 0.45;
+    }
+
+    /* =====================================================================
+       MODAL POP-UP (SAMBUTAN AWAL & SKOR AKHIR)
+       ===================================================================== */
+    .modal-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(15, 23, 42, 0.56);
+      backdrop-filter: blur(3px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 18px;
+      z-index: 50;
+      animation: fadeIn 0.2s ease-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    .modal-card {
+      width: 100%;
+      max-width: 360px;
+      background: var(--surface);
+      border-radius: 24px;
+      padding: 24px 18px 20px;
+      text-align: center;
+      box-shadow: 0 20px 44px rgba(15, 23, 42, 0.25);
+      animation: popScale 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    @keyframes popScale {
+      from { transform: scale(0.9); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+
+    .welcome-duo-icons {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      margin-bottom: 14px;
+    }
+
+    .welcome-icon-chip {
+      width: 58px;
+      height: 58px;
+      border-radius: 18px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 2px;
+      font-size: 10px;
+      font-weight: 800;
+    }
+
+    .welcome-icon-chip.hot {
+      background: #fef3c7;
+      border: 2px solid #fcd34d;
+      color: #b45309;
+    }
+
+    .welcome-icon-chip.cold {
+      background: #e0f2fe;
+      border: 2px solid #7dd3fc;
+      color: #0369a1;
+    }
+
+    .welcome-vs {
+      font-size: 16px;
+      font-weight: 900;
+      color: var(--primary);
+    }
+
+    .modal-title {
+      font-size: 20px;
+      font-weight: 900;
+      color: var(--text-main);
+      margin-bottom: 8px;
+      line-height: 1.25;
+    }
+
+    .modal-desc {
+      font-size: 13px;
+      line-height: 1.5;
+      color: var(--text-muted);
+      margin-bottom: 18px;
+    }
+
+    .primary-cta-btn {
+      width: 100%;
+      min-height: 48px;
+      padding: 12px 16px;
+      border: none;
+      border-radius: 14px;
+      background: linear-gradient(135deg, #4f46e5, #4338ca);
+      color: #ffffff;
+      font-size: 15px;
+      font-weight: 800;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      box-shadow: 0 6px 16px rgba(79, 70, 229, 0.3);
+      transition: transform 0.12s ease;
+    }
+
+    .primary-cta-btn:active {
+      transform: scale(0.97);
+    }
+
+    .stars-row {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      margin-bottom: 10px;
+    }
+
+    .score-pill-large {
+      display: inline-block;
+      padding: 6px 18px;
+      border-radius: 999px;
+      background: var(--primary-soft);
+      border: 2px solid #c7d2fe;
+      color: var(--primary-dark);
+      font-size: 22px;
+      font-weight: 900;
+      margin-bottom: 10px;
+    }
+
+    /* Penyesuaian Layar Pendek (misal 360x640) */
+    @media (max-height: 660px) {
+      .app-header {
+        height: 46px;
+        min-height: 46px;
+      }
+      .game-viewport {
+        padding: 8px 10px 10px;
+        gap: 8px;
+      }
+      .pair-stage {
+        padding: 9px 10px 8px;
+      }
+      .slot-card {
+        min-height: 112px;
+        padding: 8px 6px;
+      }
+      .slot-illus,
+      .slot-qmark-box {
+        width: 46px;
+        height: 46px;
+        margin-bottom: 5px;
+      }
+      .slot-illus svg {
+        width: 34px;
+        height: 34px;
+      }
+      .options-stack {
+        gap: 8px;
+      }
+      .option-card {
+        min-height: 66px;
+        padding: 8px 12px;
+      }
+      .opt-illus {
+        width: 44px;
+        height: 44px;
+      }
+      .opt-illus svg {
+        width: 32px;
+        height: 32px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="app-shell">
+    <!-- =================================================================
+         HEADER MINIMALIS
+         ================================================================= -->
+    <header class="app-header">
+      <div class="brand-group">
+        <div class="brand-logo" aria-hidden="true">⇄</div>
+        <div>
+          <h1 class="brand-title">Game Lawan Kata</h1>
+          <div class="brand-sub">Opposite Adjectives • Bahasa Inggris SD</div>
+        </div>
+      </div>
+
+      <div class="header-actions">
+        <button id="btn-sound" type="button" class="icon-btn" aria-label="Matikan atau nyalakan suara">
+          <!-- Ikon speaker dirender JS -->
+        </button>
+      </div>
+    </header>
+
+    <!-- =================================================================
+         VIEWPORT UTAMA (MODEL LENGKAPI KOTAK KOSONG: ATAS - BAWAH)
+         ================================================================= -->
+    <main class="game-viewport">
+      <!-- Bar Progres 10 Langkah & Skor -->
+      <div class="status-bar">
+        <div id="progress-track" class="progress-track" aria-label="Progres 10 Soal">
+          <!-- 10 pil progres dirender JS -->
+        </div>
+        <div id="score-badge" class="score-badge">★ 0</div>
+      </div>
+
+      <!-- Kartu Atas: Pasangan Kata [Soal] ⇄ [Kotak Kosong ?] -->
+      <section class="pair-stage" aria-live="polite">
+        <div class="q-top-meta">
+          <span id="q-number-pill" class="q-number-pill">Soal 1 / 10</span>
+          <button id="btn-speak" type="button" class="speak-btn" aria-label="Dengarkan pengucapan kata Bahasa Inggris">
+            <span>🔊</span>
+            <span>Dengar</span>
+          </button>
+        </div>
+
+        <div class="pair-slots-row">
+          <!-- Slot Kiri: Kata Soal -->
+          <div class="slot-card known">
+            <div id="q-illustration-box" class="slot-illus" aria-hidden="true">
+              <!-- Ilustrasi SVG kata soal -->
+            </div>
+            <div id="q-word-en" class="slot-word-en">Cold</div>
+            <div id="q-word-id" class="slot-word-id">(Dingin)</div>
+          </div>
+
+          <!-- Simbol Penghubung Lawan Kata -->
+          <div class="pair-connector" aria-hidden="true">⇄</div>
+
+          <!-- Slot Kanan: Kotak Kosong yang Akan Diisi Jawaban -->
+          <div id="slot-target-card" class="slot-card target-empty">
+            <div class="slot-qmark-box">?</div>
+            <div class="slot-placeholder-text">Pilih lawan<br />katanya!</div>
+          </div>
+        </div>
+
+        <div id="q-feedback" class="q-feedback" role="status">
+          ✓ Benar! Cold ↔ Hot
+        </div>
+      </section>
+
+      <!-- Bagian Bawah: 2 Kartu Pilihan Jawaban Lebar -->
+      <section id="options-grid" class="options-stack" aria-label="Pilihan Jawaban Lawan Kata">
+        <!-- 2 Kartu Pilihan Bergambar dirender JS -->
+      </section>
+    </main>
+
+    <!-- =================================================================
+         POP-UP 1: SAMBUTAN JUDUL GAME
+         ================================================================= -->
+    <div id="welcome-modal" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="welcome-title">
+      <div class="modal-card">
+        <div class="welcome-duo-icons" aria-hidden="true">
+          <div class="welcome-icon-chip hot">
+            <div id="welcome-icon-hot"></div>
+            <span>Hot</span>
+          </div>
+          <span class="welcome-vs">⇄</span>
+          <div class="welcome-icon-chip cold">
+            <div id="welcome-icon-cold"></div>
+            <span>Cold</span>
+          </div>
+        </div>
+        <h2 id="welcome-title" class="modal-title">Game Lawan Kata</h2>
+        <p class="modal-desc">
+          Lengkapi kotak kosong dengan lawan kata (<em>antonym</em>) Bahasa Inggris yang tepat! Tersedia 10 soal acak dari 100 pasang kata sifat SD.
+        </p>
+        <button id="btn-start-game" type="button" class="primary-cta-btn">
+          <span>Mulai Main</span>
+          <span>▶</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- =================================================================
+         POP-UP 2: SKOR AKHIR (10 SOAL SELESAI)
+         ================================================================= -->
+    <div id="result-modal" class="modal-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="result-title">
+      <div class="modal-card">
+        <div id="result-stars" class="stars-row"></div>
+        <h3 id="result-title" class="modal-title">Hebat Sekali!</h3>
+        <div id="result-score-pill" class="score-pill-large">10 / 10 Benar</div>
+        <p id="result-desc" class="modal-desc">
+          Luar biasa! Kamu berhasil mencocokkan pasangan lawan kata Bahasa Inggris dengan sangat baik.
+        </p>
+        <button id="btn-play-again" type="button" class="primary-cta-btn">
+          <span>Main Lagi (10 Soal Baru)</span>
+          <span>🔄</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      'use strict';
+
+      /* =====================================================================
+         MESIN EFEK SUARA SINTETIS (WEB AUDIO API) & PENGUCAPAN INGGRIS
+         ===================================================================== */
+      const SoundFX = {
+        ctx: null,
+        muted: false,
+
+        ensureContext() {
+          try {
+            if (!this.ctx) {
+              const AudioCtx = window.AudioContext || window.webkitAudioContext;
+              if (AudioCtx) {
+                this.ctx = new AudioCtx();
+              }
+            }
+            if (this.ctx && this.ctx.state === 'suspended') {
+              this.ctx.resume();
+            }
+          } catch (e) {}
+        },
+
+        playTone(freq, type, duration, delay, gainVal) {
+          if (this.muted) return;
+          try {
+            this.ensureContext();
+            if (!this.ctx) return;
+
+            const now = this.ctx.currentTime + (delay || 0);
+            const osc = this.ctx.createOscillator();
+            const gain = this.ctx.createGain();
+
+            osc.type = type || 'sine';
+            osc.frequency.setValueAtTime(freq, now);
+
+            const peak = gainVal || 0.14;
+            gain.gain.setValueAtTime(0.0001, now);
+            gain.gain.exponentialRampToValueAtTime(peak, now + 0.015);
+            gain.gain.exponentialRampToValueAtTime(0.0001, now + duration);
+
+            osc.connect(gain);
+            gain.connect(this.ctx.destination);
+
+            osc.start(now);
+            osc.stop(now + duration + 0.02);
+          } catch (e) {}
+        },
+
+        tap() {
+          this.playTone(540, 'sine', 0.07, 0, 0.11);
+        },
+
+        correct() {
+          this.playTone(523.25, 'triangle', 0.13, 0, 0.15);
+          this.playTone(659.25, 'triangle', 0.22, 0.09, 0.16);
+        },
+
+        wrong() {
+          this.playTone(230, 'sawtooth', 0.14, 0, 0.08);
+          this.playTone(190, 'sawtooth', 0.2, 0.11, 0.08);
+        },
+
+        fanfare() {
+          this.playTone(523.25, 'triangle', 0.14, 0, 0.15);
+          this.playTone(659.25, 'triangle', 0.14, 0.1, 0.15);
+          this.playTone(783.99, 'triangle', 0.16, 0.2, 0.16);
+          this.playTone(1046.5, 'triangle', 0.36, 0.31, 0.18);
+        }
+      };
+
+      function speakEnglishWord(word, isAuto) {
+        if (isAuto && SoundFX.muted) return;
+        try {
+          if ('speechSynthesis' in window) {
+            window.speechSynthesis.cancel();
+            const utter = new SpeechSynthesisUtterance(word);
+            utter.lang = 'en-US';
+            utter.rate = 0.88;
+            window.speechSynthesis.speak(utter);
+          }
+        } catch (e) {}
+      }
+
+      /* =====================================================================
+         KOLEKSI ILUSTRASI VEKTOR SEDERHANA (INLINE SVG 48x48)
+         ===================================================================== */
+      const ICONS = {
+        sun: `<svg viewBox="0 0 48 48"><circle cx="24" cy="24" r="10" fill="#facc15" stroke="#eab308" stroke-width="2.5"/><g stroke="#f59e0b" stroke-width="3" stroke-linecap="round"><line x1="24" y1="4" x2="24" y2="9"/><line x1="24" y1="39" x2="24" y2="44"/><line x1="4" y1="24" x2="9" y2="24"/><line x1="39" y1="24" x2="44" y2="24"/><line x1="10" y1="10" x2="14" y2="14"/><line x1="34" y1="34" x2="38" y2="38"/><line x1="38" y1="10" x2="34" y2="14"/><line x1="14" y1="34" x2="10" y2="38"/></g></svg>`,
+        snowflake: `<svg viewBox="0 0 48 48" fill="none" stroke="#0284c7" stroke-width="3" stroke-linecap="round"><line x1="24" y1="6" x2="24" y2="42"/><line x1="8.4" y1="15" x2="39.6" y2="33"/><line x1="39.6" y1="15" x2="8.4" y2="33"/><polyline points="19,10 24,15 29,10"/><polyline points="19,38 24,33 29,38"/><circle cx="24" cy="24" r="3" fill="#bae6fd"/></svg>`,
+        big_cube: `<svg viewBox="0 0 48 48"><rect x="7" y="7" width="34" height="34" rx="8" fill="#818cf8" stroke="#4f46e5" stroke-width="2.5"/><path d="M15 24h18M24 15v18" stroke="#ffffff" stroke-width="3" stroke-linecap="round"/></svg>`,
+        small_dot: `<svg viewBox="0 0 48 48"><circle cx="24" cy="24" r="7" fill="#38bdf8" stroke="#0284c7" stroke-width="2.5"/><circle cx="24" cy="24" r="15" fill="none" stroke="#94a3b8" stroke-width="2" stroke-dasharray="3 3"/></svg>`,
+        tall_tower: `<svg viewBox="0 0 48 48"><rect x="16" y="6" width="16" height="36" rx="4" fill="#34d399" stroke="#059669" stroke-width="2.5"/><rect x="20" y="11" width="3" height="4" fill="#fff"/><rect x="25" y="11" width="3" height="4" fill="#fff"/><rect x="20" y="19" width="3" height="4" fill="#fff"/><rect x="25" y="19" width="3" height="4" fill="#fff"/><rect x="20" y="27" width="3" height="4" fill="#fff"/><rect x="25" y="27" width="3" height="4" fill="#fff"/></svg>`,
+        short_block: `<svg viewBox="0 0 48 48"><rect x="12" y="28" width="24" height="14" rx="4" fill="#fb923c" stroke="#ea580c" stroke-width="2.5"/><line x1="10" y1="22" x2="38" y2="22" stroke="#94a3b8" stroke-width="2" stroke-dasharray="3 3"/></svg>`,
+        happy: `<svg viewBox="0 0 48 48"><circle cx="24" cy="24" r="18" fill="#fde047" stroke="#eab308" stroke-width="2.5"/><circle cx="18" cy="20" r="2.3" fill="#0f172a"/><circle cx="30" cy="20" r="2.3" fill="#0f172a"/><path d="M16 28c2 5 14 5 16 0" fill="none" stroke="#0f172a" stroke-width="2.8" stroke-linecap="round"/></svg>`,
+        sad: `<svg viewBox="0 0 48 48"><circle cx="24" cy="24" r="18" fill="#93c5fd" stroke="#2563eb" stroke-width="2.5"/><circle cx="18" cy="20" r="2.3" fill="#0f172a"/><circle cx="30" cy="20" r="2.3" fill="#0f172a"/><path d="M16 33c2-4 14-4 16 0" fill="none" stroke="#0f172a" stroke-width="2.8" stroke-linecap="round"/><path d="M33 24c0 3-2 4-2 4s-2-1-2-4a2 2 0 0 1 4 0z" fill="#0284c7"/></svg>`,
+        angry: `<svg viewBox="0 0 48 48"><circle cx="24" cy="24" r="18" fill="#fca5a5" stroke="#dc2626" stroke-width="2.5"/><line x1="14" y1="17" x2="20" y2="20" stroke="#7f1d1d" stroke-width="2.5" stroke-linecap="round"/><line x1="34" y1="17" x2="28" y2="20" stroke="#7f1d1d" stroke-width="2.5" stroke-linecap="round"/><circle cx="18" cy="22" r="2" fill="#0f172a"/><circle cx="30" cy="22" r="2" fill="#0f172a"/><path d="M17 33c3-3 11-3 14 0" fill="none" stroke="#7f1d1d" stroke-width="2.5" stroke-linecap="round"/></svg>`,
+        bolt: `<svg viewBox="0 0 48 48"><polygon points="27,5 11,27 23,27 20,43 37,21 25,21" fill="#facc15" stroke="#d97706" stroke-width="2.2" stroke-linejoin="round"/></svg>`,
+        snail: `<svg viewBox="0 0 48 48"><path d="M10 34h26c3 0 5-2 5-4 0-3-3-4-5-3l-3 1" fill="#fde68a" stroke="#d97706" stroke-width="2.2" stroke-linecap="round"/><circle cx="21" cy="26" r="10" fill="#fb923c" stroke="#c2410c" stroke-width="2.2"/><path d="M21 26c2 0 4-2 4-4s-2-4-5-4-6 3-6 7 3 7 7 7" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"/><line x1="37" y1="27" x2="39" y2="21" stroke="#d97706" stroke-width="2" stroke-linecap="round"/><line x1="40" y1="28" x2="43" y2="23" stroke="#d97706" stroke-width="2" stroke-linecap="round"/></svg>`,
+        weight: `<svg viewBox="0 0 48 48"><path d="M18 14a6 6 0 0 1 12 0v3H18v-3z" fill="none" stroke="#475569" stroke-width="3"/><path d="M12 17h24l4 23H8l4-23z" fill="#64748b" stroke="#334155" stroke-width="2.2" stroke-linejoin="round"/><text x="24" y="33" text-anchor="middle" fill="#fff" font-size="11" font-weight="800">KG</text></svg>`,
+        feather: `<svg viewBox="0 0 48 48"><path d="M36 10C26 10 14 20 12 36l-3 3m6-6c9 0 19-8 21-23z" fill="#bae6fd" stroke="#0284c7" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/><line x1="12" y1="36" x2="30" y2="17" stroke="#0369a1" stroke-width="2"/></svg>`,
+        sparkle: `<svg viewBox="0 0 48 48"><path d="M24 6l4 12 12 4-12 4-4 12-4-12-12-4 12-4z" fill="#fde047" stroke="#eab308" stroke-width="2" stroke-linejoin="round"/><circle cx="37" cy="11" r="3" fill="#38bdf8"/><circle cx="11" cy="36" r="2.5" fill="#34d399"/></svg>`,
+        mud: `<svg viewBox="0 0 48 48"><path d="M12 31c-4 0-6-3-5-6 1-3 4-4 6-3 1-5 7-8 12-6 4-3 11-1 12 5 4 1 5 6 2 9-2 2-6 2-9 1-4 3-12 3-18 0z" fill="#92400e" stroke="#78350f" stroke-width="2"/><circle cx="15" cy="14" r="2.5" fill="#92400e"/><circle cx="35" cy="13" r="2" fill="#92400e"/></svg>`,
+        drop: `<svg viewBox="0 0 48 48"><path d="M24 7C24 7 11 21 11 30a13 13 0 0 0 26 0C37 21 24 7 24 7z" fill="#38bdf8" stroke="#0284c7" stroke-width="2.5"/><path d="M18 31a6 6 0 0 0 6 6" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round"/></svg>`,
+        dry_leaf: `<svg viewBox="0 0 48 48"><path d="M12 36C12 20 22 10 38 10c0 16-10 26-26 26z" fill="#fcd34d" stroke="#b45309" stroke-width="2.3"/><line x1="12" y1="36" x2="32" y2="16" stroke="#b45309" stroke-width="2"/></svg>`,
+        diamond: `<svg viewBox="0 0 48 48"><polygon points="15,10 33,10 42,21 24,40 6,21" fill="#67e8f9" stroke="#0891b2" stroke-width="2.3" stroke-linejoin="round"/><polyline points="6,21 42,21" stroke="#0891b2" stroke-width="2"/><polyline points="15,10 24,40 33,10" fill="none" stroke="#0891b2" stroke-width="1.8"/></svg>`,
+        pillow: `<svg viewBox="0 0 48 48"><path d="M10 15c8 2 20 2 28 0-2 7-2 11 0 18-8-2-20-2-28 0 2-7 2-11 0-18z" fill="#f5d0fe" stroke="#c026d3" stroke-width="2.3" stroke-linejoin="round"/></svg>`,
+        candy: `<svg viewBox="0 0 48 48"><polygon points="7,14 15,20 11,26" fill="#f472b6"/><polygon points="41,34 33,28 37,22" fill="#f472b6"/><circle cx="24" cy="24" r="10" fill="#fb7185" stroke="#e11d48" stroke-width="2.2"/><path d="M18 18c4 4 8 8 12 12" stroke="#fff" stroke-width="2.5" stroke-linecap="round"/></svg>`,
+        lemon: `<svg viewBox="0 0 48 48"><ellipse cx="24" cy="24" rx="16" ry="12" transform="rotate(-25 24 24)" fill="#fef08a" stroke="#ca8a04" stroke-width="2.5"/><circle cx="11" cy="30" r="2" fill="#ca8a04"/><circle cx="37" cy="18" r="2" fill="#ca8a04"/></svg>`,
+        full_jar: `<svg viewBox="0 0 48 48"><rect x="13" y="13" width="22" height="28" rx="5" fill="#bae6fd" stroke="#0284c7" stroke-width="2.4"/><rect x="15" y="18" width="18" height="21" rx="3" fill="#38bdf8"/><rect x="16" y="8" width="16" height="5" rx="2" fill="#64748b"/></svg>`,
+        empty_jar: `<svg viewBox="0 0 48 48"><rect x="13" y="13" width="22" height="28" rx="5" fill="#ffffff" stroke="#94a3b8" stroke-width="2.4" stroke-dasharray="4 3"/><rect x="16" y="8" width="16" height="5" rx="2" fill="#94a3b8"/></svg>`,
+        open_lock: `<svg viewBox="0 0 48 48"><path d="M17 20v-6a7 7 0 0 1 13-3.5" fill="none" stroke="#059669" stroke-width="3" stroke-linecap="round"/><rect x="12" y="20" width="24" height="20" rx="5" fill="#34d399" stroke="#059669" stroke-width="2.4"/><circle cx="24" cy="30" r="2.5" fill="#fff"/></svg>`,
+        closed_lock: `<svg viewBox="0 0 48 48"><path d="M17 20v-6a7 7 0 0 1 14 0v6" fill="none" stroke="#dc2626" stroke-width="3" stroke-linecap="round"/><rect x="12" y="20" width="24" height="20" rx="5" fill="#f87171" stroke="#dc2626" stroke-width="2.4"/><circle cx="24" cy="30" r="2.5" fill="#fff"/></svg>`,
+        moon: `<svg viewBox="0 0 48 48"><path d="M31 10a14 14 0 1 0 9 23 12 12 0 0 1-9-23z" fill="#6366f1" stroke="#312e81" stroke-width="2.2"/><circle cx="34" cy="14" r="2" fill="#fde047"/><circle cx="39" cy="21" r="1.5" fill="#fde047"/></svg>`,
+        loud: `<svg viewBox="0 0 48 48"><polygon points="10,19 18,19 29,11 29,37 18,29 10,29" fill="#fb923c" stroke="#c2410c" stroke-width="2.2" stroke-linejoin="round"/><path d="M34 17a9 9 0 0 1 0 14M38 13a15 15 0 0 1 0 22" fill="none" stroke="#ea580c" stroke-width="2.5" stroke-linecap="round"/></svg>`,
+        quiet: `<svg viewBox="0 0 48 48"><polygon points="12,19 20,19 30,11 30,37 20,29 12,29" fill="#cbd5e1" stroke="#64748b" stroke-width="2.2" stroke-linejoin="round"/><line x1="35" y1="20" x2="42" y2="28" stroke="#64748b" stroke-width="2.5" stroke-linecap="round"/><line x1="42" y1="20" x2="35" y2="28" stroke="#64748b" stroke-width="2.5" stroke-linecap="round"/></svg>`,
+        sprout: `<svg viewBox="0 0 48 48"><line x1="24" y1="40" x2="24" y2="22" stroke="#16a34a" stroke-width="3" stroke-linecap="round"/><path d="M24 25c-9 0-13-6-13-12 7 0 13 4 13 12z" fill="#4ade80" stroke="#16a34a" stroke-width="2"/><path d="M24 21c9 0 13-6 13-12-7 0-13 4-13 12z" fill="#86efac" stroke="#16a34a" stroke-width="2"/></svg>`,
+        hourglass: `<svg viewBox="0 0 48 48"><path d="M14 9h20M14 39h20M16 9c0 10 8 12 8 15s-8 5-8 15M32 9c0 10-8 12-8 15s8 5 8 15" fill="none" stroke="#b45309" stroke-width="2.5" stroke-linecap="round"/><polygon points="18,37 30,37 24,29" fill="#f59e0b"/></svg>`,
+        coin: `<svg viewBox="0 0 48 48"><circle cx="24" cy="24" r="16" fill="#facc15" stroke="#ca8a04" stroke-width="2.5"/><text x="24" y="29" text-anchor="middle" fill="#854d0e" font-size="16" font-weight="900">$</text></svg>`,
+        heart: `<svg viewBox="0 0 48 48"><path d="M24 40S8 29 8 18a8.5 8.5 0 0 1 16-4 8.5 8.5 0 0 1 16 4c0 11-16 22-16 22z" fill="#f43f5e" stroke="#be123c" stroke-width="2.2"/></svg>`,
+        bandage: `<svg viewBox="0 0 48 48"><rect x="10" y="18" width="28" height="12" rx="6" transform="rotate(-35 24 24)" fill="#fed7aa" stroke="#ea580c" stroke-width="2.2"/><circle cx="24" cy="24" r="1.5" fill="#c2410c"/><circle cx="20" cy="27" r="1.5" fill="#c2410c"/><circle cx="28" cy="21" r="1.5" fill="#c2410c"/></svg>`,
+        books: `<svg viewBox="0 0 48 48"><rect x="10" y="11" width="28" height="8" rx="2" fill="#60a5fa" stroke="#2563eb" stroke-width="2"/><rect x="10" y="20" width="28" height="8" rx="2" fill="#f472b6" stroke="#db2777" stroke-width="2"/><rect x="10" y="29" width="28" height="8" rx="2" fill="#34d399" stroke="#059669" stroke-width="2"/></svg>`,
+        paper: `<svg viewBox="0 0 48 48"><rect x="13" y="8" width="22" height="32" rx="3" fill="#ffffff" stroke="#64748b" stroke-width="2.3"/><line x1="18" y1="16" x2="30" y2="16" stroke="#94a3b8" stroke-width="2"/><line x1="18" y1="22" x2="30" y2="22" stroke="#94a3b8" stroke-width="2"/></svg>`,
+        wide_arrows: `<svg viewBox="0 0 48 48" fill="none" stroke="#4f46e5" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="24" x2="41" y2="24"/><polyline points="14,17 7,24 14,31"/><polyline points="34,17 41,24 34,31"/></svg>`,
+        narrow_arrows: `<svg viewBox="0 0 48 48" fill="none" stroke="#0284c7" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="6" y1="24" x2="19" y2="24"/><polyline points="13,18 19,24 13,30"/><line x1="42" y1="24" x2="29" y2="24"/><polyline points="35,18 29,24 35,30"/></svg>`,
+        pencil: `<svg viewBox="0 0 48 48"><polygon points="10,38 14,26 32,8 40,16 22,34" fill="#fde047" stroke="#ca8a04" stroke-width="2.2" stroke-linejoin="round"/><polygon points="10,38 14,26 22,34" fill="#fed7aa"/><circle cx="11" cy="37" r="2" fill="#0f172a"/></svg>`,
+        ruler: `<svg viewBox="0 0 48 48"><rect x="7" y="18" width="34" height="12" rx="3" fill="#93c5fd" stroke="#2563eb" stroke-width="2.2"/><line x1="14" y1="18" x2="14" y2="23" stroke="#1d4ed8" stroke-width="2"/><line x1="21" y1="18" x2="21" y2="25" stroke="#1d4ed8" stroke-width="2"/><line x1="28" y1="18" x2="28" y2="23" stroke="#1d4ed8" stroke-width="2"/><line x1="35" y1="18" x2="35" y2="25" stroke="#1d4ed8" stroke-width="2"/></svg>`,
+        wave: `<svg viewBox="0 0 48 48"><path d="M7 26c4-8 8-8 12 0s8 8 12 0 7-8 10 0" fill="none" stroke="#f97316" stroke-width="3.5" stroke-linecap="round"/></svg>`,
+        circle: `<svg viewBox="0 0 48 48"><circle cx="24" cy="24" r="15" fill="#fb923c" stroke="#ea580c" stroke-width="2.5"/></svg>`,
+        square: `<svg viewBox="0 0 48 48"><rect x="10" y="10" width="28" height="28" rx="4" fill="#818cf8" stroke="#4f46e5" stroke-width="2.5"/></svg>`,
+        eye: `<svg viewBox="0 0 48 48"><path d="M6 24s7-11 18-11 18 11 18 11-7 11-18 11S6 24 6 24z" fill="#e0f2fe" stroke="#0284c7" stroke-width="2.5"/><circle cx="24" cy="24" r="5.5" fill="#0369a1"/></svg>`,
+        zzz: `<svg viewBox="0 0 48 48" fill="none" stroke="#6366f1" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="12,14 22,14 12,24 22,24"/><polyline points="26,24 36,24 26,34 36,34"/></svg>`,
+        shield: `<svg viewBox="0 0 48 48"><path d="M24 6l14 5v11c0 10-6 16-14 20-8-4-14-10-14-20V11l14-5z" fill="#34d399" stroke="#059669" stroke-width="2.4"/><polyline points="17,24 22,29 31,19" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>`,
+        warning: `<svg viewBox="0 0 48 48"><polygon points="24,7 43,39 5,39" fill="#fef08a" stroke="#dc2626" stroke-width="2.5" stroke-linejoin="round"/><line x1="24" y1="18" x2="24" y2="28" stroke="#dc2626" stroke-width="3" stroke-linecap="round"/><circle cx="24" cy="34" r="2" fill="#dc2626"/></svg>`,
+        clock: `<svg viewBox="0 0 48 48"><circle cx="24" cy="24" r="17" fill="#ffffff" stroke="#4f46e5" stroke-width="2.5"/><polyline points="24,14 24,24 31,27" fill="none" stroke="#4f46e5" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/></svg>`,
+        cloud: `<svg viewBox="0 0 48 48"><path d="M14 34h21a8 8 0 0 0 1-15.9A11 11 0 0 0 15 16a9 9 0 0 0-1 18z" fill="#cbd5e1" stroke="#64748b" stroke-width="2.3"/></svg>`,
+        arrow_up: `<svg viewBox="0 0 48 48" fill="none" stroke="#059669" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><line x1="24" y1="39" x2="24" y2="10"/><polyline points="14,19 24,9 34,19"/></svg>`,
+        arrow_down: `<svg viewBox="0 0 48 48" fill="none" stroke="#e11d48" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><line x1="24" y1="9" x2="24" y2="38"/><polyline points="14,29 24,39 34,29"/></svg>`
+      };
+
+      /* =====================================================================
+         100 PASANG KATA SIFAT ANTONIM BAHASA INGGRIS UNTUK ANAK SD
+         Format: [kataA, artiA, ikonA, kataB, artiB, ikonB]
+         ===================================================================== */
+      const PAIRS_DATA = [
+        ['Hot', 'Panas', 'sun', 'Cold', 'Dingin', 'snowflake'],
+        ['Big', 'Besar', 'big_cube', 'Small', 'Kecil', 'small_dot'],
+        ['Tall', 'Tinggi', 'tall_tower', 'Short', 'Pendek', 'short_block'],
+        ['Happy', 'Senang', 'happy', 'Sad', 'Sedih', 'sad'],
+        ['Fast', 'Cepat', 'bolt', 'Slow', 'Lambat', 'snail'],
+        ['Heavy', 'Berat', 'weight', 'Light', 'Ringan', 'feather'],
+        ['Clean', 'Bersih', 'sparkle', 'Dirty', 'Kotor', 'mud'],
+        ['Wet', 'Basah', 'drop', 'Dry', 'Kering', 'dry_leaf'],
+        ['Hard', 'Keras', 'diamond', 'Soft', 'Lembut', 'pillow'],
+        ['Sweet', 'Manis', 'candy', 'Sour', 'Asam', 'lemon'],
+        ['Full', 'Penuh', 'full_jar', 'Empty', 'Kosong', 'empty_jar'],
+        ['Open', 'Terbuka', 'open_lock', 'Closed', 'Tertutup', 'closed_lock'],
+        ['Bright', 'Terang', 'sun', 'Dark', 'Gelap', 'moon'],
+        ['Loud', 'Keras / Bising', 'loud', 'Quiet', 'Tenang / Pelan', 'quiet'],
+        ['Young', 'Muda', 'sprout', 'Old', 'Tua', 'hourglass'],
+        ['New', 'Baru', 'sparkle', 'Ancient', 'Kuno / Lama', 'hourglass'],
+        ['Rich', 'Kaya', 'coin', 'Poor', 'Miskin', 'empty_jar'],
+        ['Strong', 'Kuat', 'weight', 'Weak', 'Lemah', 'bandage'],
+        ['Thick', 'Tebal', 'books', 'Thin', 'Tipis', 'paper'],
+        ['Wide', 'Lebar', 'wide_arrows', 'Narrow', 'Sempit', 'narrow_arrows'],
+        ['Deep', 'Dalam', 'arrow_down', 'Shallow', 'Dangkal', 'wave'],
+        ['High', 'Tinggi (Letak)', 'arrow_up', 'Low', 'Rendah', 'arrow_down'],
+        ['Sharp', 'Tajam', 'pencil', 'Blunt', 'Tumpul', 'short_block'],
+        ['Smooth', 'Halus', 'ruler', 'Rough', 'Kasar', 'wave'],
+        ['Straight', 'Lurus', 'ruler', 'Crooked', 'Bengkok', 'wave'],
+        ['Round', 'Bulat', 'circle', 'Square', 'Kotak', 'square'],
+        ['Brave', 'Berani', 'shield', 'Shy', 'Pemalu', 'quiet'],
+        ['Kind', 'Baik Hati', 'heart', 'Cruel', 'Kejam', 'angry'],
+        ['Polite', 'Sopan', 'happy', 'Rude', 'Tidak Sopan', 'angry'],
+        ['Honest', 'Jujur', 'shield', 'Dishonest', 'Tidak Jujur', 'warning'],
+        ['Clever', 'Pintar', 'sparkle', 'Silly', 'Konyol', 'wave'],
+        ['Diligent', 'Rajin', 'books', 'Lazy', 'Malas', 'zzz'],
+        ['Healthy', 'Sehat', 'heart', 'Sick', 'Sakit', 'bandage'],
+        ['Hungry', 'Lapar', 'empty_jar', 'Stuffed', 'Kenyang', 'full_jar'],
+        ['Awake', 'Terbangun', 'eye', 'Sleepy', 'Mengantuk', 'zzz'],
+        ['Alive', 'Hidup', 'sprout', 'Dead', 'Mati', 'dry_leaf'],
+        ['Safe', 'Aman', 'shield', 'Dangerous', 'Berbahaya', 'warning'],
+        ['Easy', 'Mudah', 'paper', 'Difficult', 'Sulit', 'books'],
+        ['True', 'Benar', 'shield', 'False', 'Salah', 'warning'],
+        ['Correct', 'Tepat', 'shield', 'Incorrect', 'Keliru', 'warning'],
+        ['Early', 'Lebih Awal', 'sun', 'Late', 'Terlambat', 'clock'],
+        ['Cheap', 'Murah', 'coin', 'Expensive', 'Mahal', 'diamond'],
+        ['Beautiful', 'Indah / Cantik', 'sparkle', 'Ugly', 'Jelek', 'mud'],
+        ['Neat', 'Rapi', 'ruler', 'Messy', 'Berantakan', 'mud'],
+        ['Busy', 'Sibuk', 'clock', 'Free', 'Senggang', 'pillow'],
+        ['Calm', 'Tenang', 'pillow', 'Angry', 'Marah', 'angry'],
+        ['Friendly', 'Ramah', 'happy', 'Unfriendly', 'Tidak Ramah', 'angry'],
+        ['Generous', 'Dermawan', 'heart', 'Stingy', 'Pelit', 'closed_lock'],
+        ['Patient', 'Sabar', 'clock', 'Impatient', 'Tidak Sabar', 'bolt'],
+        ['Careful', 'Hati-hati', 'eye', 'Careless', 'Ceroboh', 'bandage'],
+        ['Lucky', 'Beruntung', 'sparkle', 'Unlucky', 'Sial', 'cloud'],
+        ['Famous', 'Terkenal', 'loud', 'Unknown', 'Tak Dikenal', 'quiet'],
+        ['Modern', 'Modern', 'bolt', 'Traditional', 'Tradisional', 'hourglass'],
+        ['Natural', 'Alami', 'sprout', 'Artificial', 'Buatan', 'square'],
+        ['Public', 'Umum', 'open_lock', 'Private', 'Pribadi', 'closed_lock'],
+        ['Real', 'Nyata', 'diamond', 'Fake', 'Palsu', 'warning'],
+        ['Same', 'Sama', 'square', 'Different', 'Berbeda', 'circle'],
+        ['Simple', 'Sederhana', 'paper', 'Complex', 'Rumit', 'books'],
+        ['Single', 'Tunggal', 'small_dot', 'Double', 'Ganda', 'big_cube'],
+        ['Special', 'Istimewa', 'diamond', 'Ordinary', 'Biasa', 'paper'],
+        ['Useful', 'Berguna', 'pencil', 'Useless', 'Tak Berguna', 'empty_jar'],
+        ['Visible', 'Terlihat', 'eye', 'Invisible', 'Tak Terlihat', 'zzz'],
+        ['Warm', 'Hangat', 'sun', 'Cool', 'Sejuk', 'snowflake'],
+        ['Spicy', 'Pedas', 'sun', 'Bland', 'Hambar', 'paper'],
+        ['Salty', 'Asin', 'drop', 'Tasteless', 'Tawar', 'empty_jar'],
+        ['Shiny', 'Berkilau', 'diamond', 'Dull', 'Kusam', 'cloud'],
+        ['Tight', 'Ketat / Erat', 'narrow_arrows', 'Loose', 'Longgar', 'wide_arrows'],
+        ['Solid', 'Padat', 'square', 'Liquid', 'Cair', 'drop'],
+        ['Flat', 'Datar', 'ruler', 'Bumpy', 'Bergelombang', 'wave'],
+        ['Hollow', 'Berongga', 'empty_jar', 'Dense', 'Padat Berisi', 'weight'],
+        ['Steamy', 'Beruap Panas', 'sun', 'Freezing', 'Membeku', 'snowflake'],
+        ['Sunny', 'Cerah', 'sun', 'Cloudy', 'Mendung', 'cloud'],
+        ['Windy', 'Berangin', 'wave', 'Still', 'Tenang (Udara)', 'quiet'],
+        ['Clear', 'Jernih', 'drop', 'Muddy', 'Keruh', 'mud'],
+        ['Fresh', 'Segar', 'sprout', 'Stale', 'Basi', 'dry_leaf'],
+        ['Ripe', 'Matang', 'candy', 'Raw', 'Mentah', 'lemon'],
+        ['Giant', 'Raksasa', 'big_cube', 'Tiny', 'Mungil', 'small_dot'],
+        ['Huge', 'Sangat Besar', 'tall_tower', 'Mini', 'Sangat Kecil', 'small_dot'],
+        ['Noisy', 'Ramai / Berisik', 'loud', 'Silent', 'Hening', 'quiet'],
+        ['Active', 'Aktif', 'bolt', 'Passive', 'Pasif', 'zzz'],
+        ['Cheerful', 'Ceria', 'happy', 'Gloomy', 'Murung', 'sad'],
+        ['Proud', 'Bangga', 'sparkle', 'Ashamed', 'Malu', 'sad'],
+        ['Curious', 'Penasaran', 'eye', 'Bored', 'Bosan', 'zzz'],
+        ['Excited', 'Bersemangat', 'bolt', 'Tired', 'Lelah', 'snail'],
+        ['Gentle', 'Lemah Lembut', 'feather', 'Fierce', 'Buas / Galak', 'angry'],
+        ['Tame', 'Jinak', 'heart', 'Wild', 'Liar', 'warning'],
+        ['Rare', 'Langka', 'diamond', 'Common', 'Umum Dijumpai', 'circle'],
+        ['Front', 'Depan', 'arrow_up', 'Back', 'Belakang', 'arrow_down'],
+        ['Top', 'Atas', 'arrow_up', 'Bottom', 'Bawah', 'arrow_down'],
+        ['Inside', 'Di Dalam', 'closed_lock', 'Outside', 'Di Luar', 'open_lock'],
+        ['Near', 'Dekat', 'narrow_arrows', 'Far', 'Jauh', 'wide_arrows'],
+        ['First', 'Pertama', 'sparkle', 'Last', 'Terakhir', 'hourglass'],
+        ['Left', 'Kiri', 'narrow_arrows', 'Right', 'Kanan', 'wide_arrows'],
+        ['Past', 'Lampau', 'hourglass', 'Future', 'Masa Depan', 'clock'],
+        ['Inner', 'Bagian Dalam', 'small_dot', 'Outer', 'Bagian Luar', 'big_cube'],
+        ['Upper', 'Lebih Atas', 'arrow_up', 'Lower', 'Lebih Bawah', 'arrow_down'],
+        ['Major', 'Utama', 'big_cube', 'Minor', 'Kecil / Sampingan', 'small_dot'],
+        ['Positive', 'Positif', 'happy', 'Negative', 'Negatif', 'sad'],
+        ['Agile', 'Lincah', 'bolt', 'Clumsy', 'Canggung', 'snail'],
+        ['Brilliant', 'Cemerlang', 'sun', 'Dim', 'Redup', 'moon']
+      ];
+
+      /* =====================================================================
+         STATE PERMAINAN (10 SOAL ACAK DARI 100 PASANG KATA)
+         ===================================================================== */
+      const TOTAL_QUESTIONS = 10;
+
+      const state = {
+        questions: [],
+        qIndex: 0,
+        score: 0,
+        steps: [],
+        locked: false,
+        nextTimer: null
+      };
+
+      /* =====================================================================
+         REFERENSI DOM
+         ===================================================================== */
+      const btnSound = document.getElementById('btn-sound');
+      const progressTrack = document.getElementById('progress-track');
+      const scoreBadge = document.getElementById('score-badge');
+      const qNumberPill = document.getElementById('q-number-pill');
+      const btnSpeak = document.getElementById('btn-speak');
+      const qIllustrationBox = document.getElementById('q-illustration-box');
+      const qWordEn = document.getElementById('q-word-en');
+      const qWordId = document.getElementById('q-word-id');
+      const slotTargetCard = document.getElementById('slot-target-card');
+      const qFeedback = document.getElementById('q-feedback');
+      const optionsGrid = document.getElementById('options-grid');
+
+      const welcomeModal = document.getElementById('welcome-modal');
+      const welcomeIconHot = document.getElementById('welcome-icon-hot');
+      const welcomeIconCold = document.getElementById('welcome-icon-cold');
+      const btnStartGame = document.getElementById('btn-start-game');
+
+      const resultModal = document.getElementById('result-modal');
+      const resultStars = document.getElementById('result-stars');
+      const resultTitle = document.getElementById('result-title');
+      const resultScorePill = document.getElementById('result-score-pill');
+      const resultDesc = document.getElementById('result-desc');
+      const btnPlayAgain = document.getElementById('btn-play-again');
+
+      /* =====================================================================
+         UTILITAS & PEMBANGKIT 10 SOAL ACAK
+         ===================================================================== */
+      function shuffle(list) {
+        const arr = list.slice();
+        for (let i = arr.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          [arr[i], arr[j]] = [arr[j], arr[i]];
+        }
+        return arr;
+      }
+
+      function getIconSvg(key) {
+        return ICONS[key] || ICONS.sparkle;
+      }
+
+      function renderSoundIcon() {
+        btnSound.classList.toggle('muted', SoundFX.muted);
+        btnSound.innerHTML = SoundFX.muted
+          ? `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><line x1="23" y1="9" x2="17" y2="15"></line><line x1="17" y1="9" x2="23" y2="15"></line></svg>`
+          : `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path><path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path></svg>`;
+      }
+
+      function buildRandomQuiz() {
+        const selectedIndices = shuffle(PAIRS_DATA.map((_, idx) => idx)).slice(0, TOTAL_QUESTIONS);
+
+        return selectedIndices.map((pairIdx) => {
+          const pair = PAIRS_DATA[pairIdx];
+          const askA = Math.random() < 0.5;
+          const promptWord = askA
+            ? { en: pair[0], id: pair[1], icon: pair[2] }
+            : { en: pair[3], id: pair[4], icon: pair[5] };
+          const answerWord = askA
+            ? { en: pair[3], id: pair[4], icon: pair[5], isCorrect: true }
+            : { en: pair[0], id: pair[1], icon: pair[2], isCorrect: true };
+
+          const usedWords = new Set([promptWord.en.toLowerCase(), answerWord.en.toLowerCase()]);
+          const distractors = [];
+          const otherIndices = shuffle(PAIRS_DATA.map((_, idx) => idx).filter((idx) => idx !== pairIdx));
+
+          for (const idx of otherIndices) {
+            const p = PAIRS_DATA[idx];
+            const pickFirst = Math.random() < 0.5;
+            const candidate = pickFirst
+              ? { en: p[0], id: p[1], icon: p[2], isCorrect: false }
+              : { en: p[3], id: p[4], icon: p[5], isCorrect: false };
+
+            if (!usedWords.has(candidate.en.toLowerCase())) {
+              usedWords.add(candidate.en.toLowerCase());
+              distractors.push(candidate);
+              if (distractors.length === 1) break;
+            }
+          }
+
+          return {
+            prompt: promptWord,
+            answer: answerWord,
+            options: shuffle([answerWord, ...distractors])
+          };
+        });
+      }
+
+      /* =====================================================================
+         KONTROL ALUR PERMAINAN
+         ===================================================================== */
+      function startNewSession(autoSpeakFirst) {
+        if (state.nextTimer) {
+          clearTimeout(state.nextTimer);
+          state.nextTimer = null;
+        }
+        resultModal.classList.add('hidden');
+        state.questions = buildRandomQuiz();
+        state.qIndex = 0;
+        state.score = 0;
+        state.steps = Array.from({ length: TOTAL_QUESTIONS }, (_, i) => (i === 0 ? 'current' : 'pending'));
+        state.locked = false;
+
+        renderQuestion(Boolean(autoSpeakFirst));
+      }
+
+      function renderProgress() {
+        progressTrack.innerHTML = state.steps
+          .map((st) => `<span class="step-pill ${st}"></span>`)
+          .join('');
+        scoreBadge.textContent = `★ ${state.score}`;
+      }
+
+      function renderQuestion(shouldAutoSpeak) {
+        const q = state.questions[state.qIndex];
+        state.locked = false;
+        renderProgress();
+
+        qNumberPill.textContent = `Soal ${state.qIndex + 1} / ${TOTAL_QUESTIONS}`;
+        qIllustrationBox.innerHTML = getIconSvg(q.prompt.icon);
+        qWordEn.textContent = q.prompt.en;
+        qWordId.textContent = `(${q.prompt.id})`;
+
+        slotTargetCard.className = 'slot-card target-empty';
+        slotTargetCard.innerHTML = `
+          <div class="slot-qmark-box">?</div>
+          <div class="slot-placeholder-text">Pilih lawan<br />katanya!</div>
+        `;
+
+        qFeedback.className = 'q-feedback';
+        qFeedback.textContent = '';
+
+        optionsGrid.innerHTML = q.options
+          .map(
+            (opt, idx) => `
+              <button type="button" class="option-card" data-idx="${idx}">
+                <span class="opt-badge">${String.fromCharCode(65 + idx)}</span>
+                <div class="opt-illus" aria-hidden="true">${getIconSvg(opt.icon)}</div>
+                <div class="opt-text-group">
+                  <div class="opt-word-en">${opt.en}</div>
+                  <div class="opt-word-id is-hidden-id">(${opt.id})</div>
+                </div>
+              </button>
+            `
+          )
+          .join('');
+
+        optionsGrid.querySelectorAll('.option-card').forEach((card) => {
+          card.addEventListener('click', () => {
+            if (state.locked) return;
+            handleOptionPick(Number(card.dataset.idx), card);
+          });
+        });
+
+        if (shouldAutoSpeak) {
+          speakEnglishWord(q.prompt.en, true);
+        }
+      }
+
+      function handleOptionPick(optIdx, chosenCard) {
+        state.locked = true;
+        const q = state.questions[state.qIndex];
+        const picked = q.options[optIdx];
+        const isCorrect = picked.isCorrect;
+
+        slotTargetCard.className = 'slot-card target-filled';
+        slotTargetCard.innerHTML = `
+          <div class="slot-illus" aria-hidden="true">${getIconSvg(q.answer.icon)}</div>
+          <div class="slot-word-en">${q.answer.en}</div>
+          <div class="slot-word-id">(${q.answer.id})</div>
+        `;
+
+        const allCards = optionsGrid.querySelectorAll('.option-card');
+        allCards.forEach((card, i) => {
+          card.disabled = true;
+          const idLabel = card.querySelector('.opt-word-id');
+          if (idLabel) idLabel.classList.remove('is-hidden-id');
+
+          if (q.options[i].isCorrect) {
+            card.classList.add('opt-correct');
+          } else if (card === chosenCard && !isCorrect) {
+            card.classList.add('opt-wrong');
+          } else {
+            card.classList.add('opt-dim');
+          }
+        });
+
+        if (isCorrect) {
+          SoundFX.correct();
+          state.score += 1;
+          state.steps[state.qIndex] = 'correct';
+          qFeedback.textContent = `✓ Benar! ${q.prompt.en} (${q.prompt.id}) ↔ ${q.answer.en} (${q.answer.id})`;
+          qFeedback.className = 'q-feedback visible is-correct';
+        } else {
+          SoundFX.wrong();
+          state.steps[state.qIndex] = 'wrong';
+          qFeedback.textContent = `Lawan kata ${q.prompt.en} adalah ${q.answer.en} (${q.answer.id})`;
+          qFeedback.className = 'q-feedback visible is-wrong';
+        }
+
+        renderProgress();
+
+        state.nextTimer = setTimeout(() => {
+          if (state.qIndex < TOTAL_QUESTIONS - 1) {
+            state.qIndex += 1;
+            state.steps[state.qIndex] = 'current';
+            renderQuestion(true);
+          } else {
+            showResultModal();
+          }
+        }, 1300);
+      }
+
+      function showResultModal() {
+        const score = state.score;
+        const starCount = score >= 9 ? 3 : score >= 6 ? 2 : 1;
+
+        if (score >= 7) {
+          SoundFX.fanfare();
+        } else {
+          SoundFX.tap();
+        }
+
+        const starFilled = `<svg width="38" height="38" viewBox="0 0 24 24" fill="#f59e0b"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>`;
+        const starEmpty = `<svg width="38" height="38" viewBox="0 0 24 24" fill="#e2e8f0"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>`;
+        resultStars.innerHTML = [0, 1, 2].map((i) => (i < starCount ? starFilled : starEmpty)).join('');
+
+        resultScorePill.textContent = `${score} / ${TOTAL_QUESTIONS} Benar`;
+
+        if (score >= 9) {
+          resultTitle.textContent = 'Jagoan Bahasa Inggris!';
+          resultDesc.textContent = 'Luar biasa! Kamu hampir menjawab semua pasangan lawan kata dengan sempurna.';
+        } else if (score >= 6) {
+          resultTitle.textContent = 'Hebat Sekali!';
+          resultDesc.textContent = 'Bagus! Yuk main lagi untuk mencoba 10 pasang kata baru dari 100 kosakata.';
+        } else {
+          resultTitle.textContent = 'Tetap Semangat!';
+          resultDesc.textContent = 'Latihan yang bagus! Perhatikan ilustrasi gambarnya dan coba 10 soal acak berikutnya.';
+        }
+
+        resultModal.classList.remove('hidden');
+      }
+
+      /* =====================================================================
+         EVENT LISTENERS & INISIALISASI
+         ===================================================================== */
+      btnStartGame.addEventListener('click', () => {
+        SoundFX.ensureContext();
+        SoundFX.correct();
+        welcomeModal.classList.add('hidden');
+        startNewSession(true);
+      });
+
+      btnPlayAgain.addEventListener('click', () => {
+        SoundFX.tap();
+        startNewSession(true);
+      });
+
+      btnSpeak.addEventListener('click', () => {
+        const q = state.questions[state.qIndex];
+        if (q) {
+          speakEnglishWord(q.prompt.en, false);
+        }
+      });
+
+      btnSound.addEventListener('click', () => {
+        SoundFX.muted = !SoundFX.muted;
+        renderSoundIcon();
+        if (!SoundFX.muted) SoundFX.tap();
+      });
+
+      welcomeIconHot.innerHTML = `<div style="width:28px;height:28px;">${ICONS.sun}</div>`;
+      welcomeIconCold.innerHTML = `<div style="width:28px;height:28px;">${ICONS.snowflake}</div>`;
+      renderSoundIcon();
+      startNewSession(false);
+    })();
+  </script>
+</body>
+</html>
